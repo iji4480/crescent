@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+ <mapper namespace="org.ict.mapper.CartMapper">
+ 	
+ 	<resultMap type="org.ict.domain.CartVO" id="cartSelectRN">
+ 		<result property="result" column="(p.price * cnt)" />
+ 	</resultMap>
+ 	<select id="selectList" resultType="org.ict.domain.CartVO" resultMap="cartSelectRN">
+ 		SELECT cno, p.pimg, p.pname, cnt, (p.price * cnt), c.mno
+		FROM cart AS c, product AS p, userinfo AS u
+		WHERE c.mno = u.mno AND c.pno = p.pno AND c.mno = #{mno}
+	</select>
+	
+ 	<resultMap type="org.ict.domain.CartVO" id="cartTotalRN">
+ 		<result property="total" column="(p.price * cnt)" />
+ 	</resultMap>
+	<select id="total" resultType="org.ict.domain.CartVO" resultMap="cartTotalRN">
+		SELECT (p.price * cnt)
+		FROM cart AS c, product AS p, userinfo AS u
+		WHERE c.mno = u.mno AND c.pno = p.pno AND c.mno = #{mno}
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO cart (mno, pno, cnt)
+		VALUES (#{mno}, #{pno}, #{cnt})
+	</insert>
+ 	
+ 	<select id="check" resultType="int">
+ 		SELECT COUNT(pno) FROM cart
+ 		WHERE mno = #{mno} AND pno = #{pno}
+ 	</select>
+ 	
+ 	<delete id="delete">
+ 		DELETE FROM cart
+ 		WHERE cno IN
+ 		<foreach collection="cnoArr" item="cno" open="(" close=")" separator=",">
+ 			#{cno}
+ 		</foreach>
+ 		ORDER BY cno ASC
+ 	</delete>
+ 	
+ </mapper>

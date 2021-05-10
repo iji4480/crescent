@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis//DTD Mapper 3.0//EN"
+						"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.ict.mapper.ReviewMapper">
+
+	<insert id="insert">
+		INSERT INTO review(rtitle, rcontent, mno, pno)
+		VALUES(#{rtitle}, #{rcontent}, #{mno}, #{pno})
+	</insert>
+	
+	<select id="selectList" resultType="org.ict.domain.ReviewVO">
+		SELECT pimg, pname, rno, rtitle, u.mid, rwritedate
+		FROM review AS r, userinfo AS u, product AS p
+		WHERE r.mno = u.mno AND r.pno = p.pno AND rno > 0
+		ORDER BY rno DESC
+		LIMIT #{start}, #{number}
+	</select>
+	
+	<select id="count" resultType="int">
+		SELECT COUNT(rno)
+		FROM review
+		WHERE rno > 0
+	</select>
+	
+	<select id="select" resultType="org.ict.domain.ReviewVO">
+		SELECT rno, rtitle, rcontent, u.mid, rwritedate, rupdatedate
+		FROM review AS r, userinfo AS u
+		WHERE r.mno = u.mno AND rno = #{rno}
+	</select>
+	
+	<update id="update">
+		UPDATE review SET rtitle = #{rtitle}, rcontent = #{rcontent}, pno = #{pno}, rupdatedate = now()
+		WHERE rno = #{rno}
+	</update>
+	
+	<delete id="delete">
+		DELETE FROM review
+		WHERE rno = #{rno}
+	</delete>
+ 	
+ 	<select id="selectReview" resultType="org.ict.domain.ReviewVO">
+ 		SELECT r.rno, u.mid, r.rtitle, r.rcontent, r.rwritedate
+ 		FROM review AS r, userinfo AS u
+ 		WHERE r.mno = u.mno AND pno = #{pno}
+ 		ORDER BY rwritedate DESC
+ 		LIMIT 0, 5
+ 	</select>
+ 	
+ 	<select id="myReview" resultType="org.ict.domain.ReviewVO">
+ 		SELECT p.pimg, p.pname, rno, rtitle, u.mid, rwritedate
+		FROM review AS r, userinfo AS u, product AS p
+		WHERE r.mno = u.mno AND r.pno = p.pno AND r.mno = #{mno} AND rno > 0
+		ORDER BY rno DESC
+		LIMIT #{cri.start}, #{cri.number}
+ 	</select>
+	
+	<select id="myCount" resultType="int">
+		SELECT COUNT(rno) FROM review
+		WHERE mno = #{mno} AND rno > 0
+	</select>
+	
+	<select id="getRno" resultType="int">
+		SELECT MAX(rno) FROM review
+	</select>
+
+</mapper>

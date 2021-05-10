@@ -1,0 +1,105 @@
+/* 공통 */
+img {
+    width: 100%;
+}
+
+a {
+    font-size: large;
+}
+
+#logo {
+    width: 300px;
+}
+
+#footer_area {
+    background-color: #f5f5f5;
+}
+
+#h1Btn {
+    padding-top: 14px;
+}
+
+#h2Btn {
+    padding-top: 12px;
+}
+
+#h3Btn {
+    padding-top: 10px;
+}
+
+#h4Btn {
+    padding-top: 8px;
+}
+
+#h5Btn {
+    padding-top: 7px;
+}
+
+#h6Btn {
+    padding-top: 8px;
+}
+/* 공통 */
+
+
+/* index */
+#slide-item {
+    width: 1200px;
+}
+/* index */
+
+
+/* find */
+#void {
+    width: 70px;
+}
+/* find */
+
+
+/* cart & payment */
+#cartPayImg {
+    width: 200px;
+}
+
+#cartPayTd {
+    vertical-align: middle;
+}
+
+#cartPayTh {
+    padding-top: 20px;
+}
+
+#payJumbo {
+    background-color: lightgray;
+}
+/* cart & payment */
+
+
+/* cummunity */
+#cummuTh {
+    padding-top: 20px;
+}
+
+#cummuTd {
+    vertical-align: middle;
+}
+
+#cummuReImg {
+    width: 130px;
+}
+
+#imgLi {
+	list-style: none;
+}
+/* cummunity */
+
+/* notice */
+#notiTh {
+    padding-top: 20px;
+}
+/* notice */
+
+/* orderlist */
+#orderlistDiv {
+    border: 1px solid gray ;
+}
+/* orderlist */

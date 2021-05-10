@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+ <mapper namespace="org.ict.mapper.OrderDetailMapper">
+ 
+	<insert id="insert">
+		INSERT INTO orderlistdetail (ordernumber, pno, ocnt, result)
+		VALUES (#{orderNumber}, #{pno}, #{ocnt}, #{result})
+	</insert>
+	
+	<select id="select" resultType="org.ict.domain.OrderDetailVO">
+		SELECT ordernumber, p.pno, p.pname, p.pimg, ocnt, result
+		FROM orderlistdetail AS o, product AS p
+		WHERE o.pno = p.pno AND ordernumber = #{orderNumber}
+	</select>
+ 	
+ </mapper>

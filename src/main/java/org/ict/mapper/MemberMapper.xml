@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis//DTD Mapper 3.0//EN"
+						"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.ict.mapper.MemberMapper">
+	
+ 	<select id="idChk" resultType="org.ict.domain.MemberVO">
+ 		SELECT mno
+ 		FROM userinfo
+ 		WHERE mid = #{mid}
+ 	</select>
+ 	
+	<insert id="join">
+ 		INSERT INTO userinfo (mid, pwd, name, tel1, tel2, tel3, postcode, addr1, addr2)
+ 		VALUES (#{mid}, #{pwd}, #{name}, #{tel1}, #{tel2}, #{tel3}, #{postcode}, #{addr1}, #{addr2})
+ 	</insert>
+ 	
+	<select id="login" resultType="org.ict.domain.MemberVO">
+		SELECT mno, mid, name, postcode, addr1, addr2, tel1, tel2, tel3
+		FROM userinfo
+		WHERE mid = #{mid} and pwd = #{pwd}
+	</select>
+	
+	<select id="select" resultType="org.ict.domain.MemberVO">
+		SELECT mid, name, postcode, addr1, addr2, tel1, tel2, tel3, joindate
+		FROM userinfo WHERE mno = #{mno}
+	</select>
+	
+ 	
+ 	<update id="update">
+ 		UPDATE userinfo SET pwd = #{pwd}, tel1 = #{tel1}, tel2 = #{tel2}, tel3 = #{tel3}, postcode = #{postcode}, addr1 = #{addr1}, addr2 = #{addr2}
+ 		WHERE mno = #{mno}
+ 	</update>
+ 	
+	<select id="findId" resultType="org.ict.domain.MemberVO">
+		SELECT mid, name
+		FROM userinfo
+		WHERE name = #{name} AND tel1 = #{tel1} AND tel2 = #{tel2} AND tel3 = #{tel3}
+	</select>
+ 	
+ 	<select id="findPw" resultType="org.ict.domain.MemberVO">
+ 		SELECT mid FROM userinfo
+ 		WHERE mid = #{mid} AND name = #{name}
+ 		AND tel1= #{tel1} AND tel2 = #{tel2} AND tel3 = #{tel3}
+ 	</select>
+ 	
+ 	<update id="updatePw">
+ 		UPDATE userinfo SET pwd = #{pwd}
+ 		WHERE mid = #{mid}
+ 	</update>
+	
+</mapper>

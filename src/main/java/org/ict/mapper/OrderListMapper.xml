@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+ <mapper namespace="org.ict.mapper.OrderListMapper">
+ 	<!-- 장바구니에서 선택된 상품정보 -->
+	<resultMap type="org.ict.domain.CartVO" id="orderResultRN">
+ 		<result property="result" column="(p.price * cnt)" />
+ 	</resultMap>
+ 	<select id="selectPayment" resultType="org.ict.domain.CartVO" resultMap="orderResultRN">
+ 		SELECT cno, p.pimg, p.pname, cnt, (p.price * cnt), c.mno, p.pno
+		FROM cart AS c, product AS p, userinfo AS u
+		WHERE c.mno = u.mno AND c.pno = p.pno
+		AND cno IN
+		<foreach collection="arr" item="cno" open="(" close=")" separator=",">
+ 			#{cno}
+ 		</foreach>
+ 	</select>
+ 	
+ 	<resultMap type="org.ict.domain.CartVO" id="orderTotalRN">
+ 		<result property="total" column="(p.price * cnt)" />
+ 	</resultMap>
+	<select id="total" resultType="org.ict.domain.CartVO" resultMap="orderTotalRN">
+		SELECT (p.price * cnt)
+		FROM cart AS c, product AS p, userinfo AS u
+		WHERE c.mno = u.mno AND c.pno = p.pno
+		AND cno IN
+		<foreach collection="arr" item="cno" open="(" close=")" separator=",">
+ 			#{cno}
+ 		</foreach>
+	</select>
+ 	<!-- 장바구니에서 선택된 상품정보 -->
+ 	
+ 	<insert id="insertOrder">
+ 		INSERT INTO orderlist (ordernumber, mno, name, postcode, addr1, addr2, tel1, tel2, tel3, total)
+ 		VALUES (#{orderNumber}, #{mno}, #{name}, #{postcode}, #{addr1}, #{addr2}, #{tel1}, #{tel2}, #{tel3}, #{total})
+ 	</insert>
+ 	
+ 	<select id="selectAll" resultType="org.ict.domain.OrderListVO">
+ 		SELECT ordernumber, mno, name, postcode, addr1, addr2, tel1, tel2, tel3, total, ship, orderdate
+ 		FROM orderlist where mno = #{mno}
+ 		ORDER BY orderdate DESC
+ 	</select>
+ 	
+ 	<select id="selectMno" resultType="org.ict.domain.OrderListVO">
+ 		SELECT ordernumber, mno, name, postcode, addr1, addr2, tel1, tel2, tel3, total, ship, orderdate
+ 		FROM orderlist WHERE mno = #{mno}
+ 		ORDER BY orderdate DESC
+ 		LIMIT 0, 1
+ 	</select>
+ 	
+ 	<select id="selectOrNum" resultType="org.ict.domain.OrderListVO">
+ 		SELECT ordernumber, mno, name, postcode, addr1, addr2, tel1, tel2, tel3, total, ship, orderdate
+ 		FROM orderlist
+ 		WHERE ordernumber = #{orderNumber}
+ 	</select>
+ 	
+ </mapper>

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis//DTD Mapper 3.0//EN"
+						"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.ict.mapper.QnaMapper">
+	
+	<insert id="insert">
+		INSERT INTO qna(pno, qtitle, qcontent, mno)
+		VALUES(#{pno}, #{qtitle}, #{qcontent}, #{mno})
+	</insert>
+	
+	<select id="selectList" resultType="org.ict.domain.QnaVO">
+		SELECT p.pimg, p.pname, qno, qtitle, u.mid, qwritedate
+		FROM qna as q, userinfo as u, product as p
+		WHERE q.mno = u.mno AND q.pno = p.pno AND qno > 0
+		ORDER BY qno DESC
+		LIMIT #{start}, #{number}
+	</select>
+	
+	<select id="count" resultType="int">
+		SELECT COUNT(qno) FROM qna
+		WHERE qno > 0
+	</select>
+	
+	<select id="select" resultType="org.ict.domain.QnaVO">
+		SELECT pimg, pname, qno, qtitle, qcontent, q.mno, u.mid, qwritedate, qupdatedate
+		FROM qna AS q, userinfo AS u , product AS p
+		WHERE q.mno = u.mno AND q.pno = p.pno AND qno = #{qno}
+	</select>
+	
+	<update id="update">
+		UPDATE qna SET qtitle = #{qtitle}, qcontent = #{qcontent}, qupdatedate = now()
+		WHERE qno = #{qno}
+	</update>
+	
+	<delete id="delete">
+		DELETE FROM qna
+		WHERE qno = #{qno}
+	</delete>
+ 	
+ 	<select id="selectQna" resultType="org.ict.domain.QnaVO">
+ 		SELECT q.qno, u.mid, q.qtitle, q.qcontent, q.qwritedate
+ 		FROM qna AS q, userinfo AS u
+ 		WHERE q.mno = u.mno AND pno = #{pno}
+ 		ORDER BY qwritedate DESC
+ 		LIMIT 0, 5
+ 	</select>
+ 	
+ 	<select id="myQna" resultType="org.ict.domain.QnaVO">
+ 		SELECT p.pimg, p.pname, qno, qtitle, u.mid, qwritedate
+		FROM qna AS q, userinfo AS u, product AS p
+		WHERE q.mno = u.mno AND q.pno = p.pno AND q.mno = #{mno} AND qno > 0
+		ORDER BY qno DESC
+		LIMIT #{cri.start}, #{cri.number}
+ 	</select>
+	
+	<select id="myCount" resultType="int">
+		SELECT COUNT(qno) FROM qna
+		WHERE mno = #{mno} AND qno > 0
+	</select>
+	
+</mapper>

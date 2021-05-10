@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis//DTD Mapper 3.0//EN"
+						"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.ict.mapper.CrescentMapper">
+
+	<select id="getIndex" resultType="org.ict.domain.CrescentVO">
+		SELECT pno, pimg, pname, price
+		FROM product
+		ORDER BY salescnt DESC
+		LIMIT 0, 3
+	</select>
+
+</mapper>

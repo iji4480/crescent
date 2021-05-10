@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+ <mapper namespace="org.ict.mapper.ProductMapper">
+ 
+ 	<insert id="insert">
+ 		insert into product (pno, pname, price, pcnt, pimg, pdimg)
+ 		values (#{pno}, #{pname}, #{price}, #{pcnt}, #{pimg}, #{pdimg})
+ 	</insert>
+ 
+ 	<select id="selectAll" resultType="org.ict.domain.ProductVO">
+ 		select * from product where pno> 0
+ 		<if test="pname != null">
+	 		and pname LIKE CONCAT('%', #{pname}, '%')
+ 		</if>
+	</select>
+ 
+	<update id="update">
+	 	update product
+	 	set 
+		pname = #{pname}, price = #{price}, pimg = #{pimg} , pdimg = #{pdimg}
+		where pno = #{pno} <!-- ? -->
+	</update>
+	
+ 	<select id="select" resultType="org.ict.domain.ProductVO">
+ 		select * from product where pno = #{pno}
+ 	
+ 	</select>
+ 	
+ 	<update id="delete">
+ 		update psts <!-- ? -->
+ 		where pno = #{pno}
+ 	</update>
+ 	
+ 	<select id="selectRecom" resultType="org.ict.domain.ProductVO">
+ 		select * from product
+ 		order by salescnt desc
+ 		limit 0, 4
+ 	</select>
+ 	
+ 	<select id="getList" resultType="org.ict.domain.ProductVO">
+ 		select * from product
+ 	</select>
+ 	
+ 	<update id="updateSales">
+ 		update product set salescnt = salescnt + 1 where pno = #{pno}
+ 	</update>
+ 	
+ </mapper>

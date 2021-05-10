@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis//DTD Mapper 3.0//EN"
+						"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.ict.mapper.ReviewImageMapper">
+
+	<insert id="insert">
+		INSERT INTO reviewimg (uuid, uploadpath, filename, rno)
+		VALUES (#{uuid}, #{uploadPath}, #{fileName}, #{rno})
+	</insert>
+	
+	<delete id="delete">
+		DELETE FROM reviewimg WHERE rno = #{rno}
+	</delete>
+	
+	<select id="findByRno" resultType="org.ict.domain.ReviewImageVO">
+		SELECT * FROM reviewimg WHERE rno = #{rno}
+	</select>
+
+</mapper>

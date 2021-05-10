@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper 
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.ict.mapper.NoticeMapper">
+
+	<select id="getList" resultType="org.ict.domain.NoticeVO">
+		SELECT * FROM notice WHERE nno > 0
+		ORDER BY nno DESC
+	</select>
+	
+	<insert id="write"> 
+		INSERT INTO notice(nno, ntitle, ncontent) 
+		VALUES (#{nno}, #{ntitle}, #{ncontent})
+	</insert>
+	
+	<select id="read" resultType="org.ict.domain.NoticeVO">
+		SELECT * FROM notice
+		WHERE nno = #{nno}
+	</select>
+	
+	<delete id="delete">
+		DELETE FROM notice
+		WHERE nno = #{nno}
+	</delete>
+	
+	<update id="update">
+		UPDATE notice SET ntitle = #{ntitle}, ncontent = #{ncontent}
+		WHERE nno = #{nno}
+	</update>
+	
+	<select id="listPage" resultType="org.ict.domain.NoticeVO">
+		<![CDATA[
+			SELECT nno, ntitle, nwritedate
+			FROM notice
+			WHERE nno > 0
+			ORDER BY nno DESC, nwritedate DESC
+			LIMIT #{start}, #{number}
+		]]>
+	</select>
+	
+	<select id="countPageNum" resultType="int">
+		<![CDATA[
+			SELECT COUNT(nno)
+			FROM notice
+			WHERE nno > 0
+		]]>
+	</select>
+	
+
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
